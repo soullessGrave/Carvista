@@ -1,40 +1,30 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dealership;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\carRequest;
+use App\Http\Resources\carResource;
 use App\Models\Car;
-use App\Models\User;
-use App\Models\UserCar;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class carController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $cars = UserCar::all();
-        return response()->json(['data' => $cars]);
-    }
-
-    public function showUserCars()
-    {
-        $cars = UserCar::where('ownerId',auth('api')->id())->get();
-        return response()->json(['data' => $cars]);
+        $cars = Car::where('dealershipId',auth('dealership')->id())->with('dealership')->get();
+        return carResource::collection($cars);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function userCarStore(carRequest $request)
+    public function store(carRequest $request)
     {
         $input = $request->validated();
         $input['price'] = number_format($input['price']);
-        $input['ownerId'] = auth('api')->id();
-        UserCar::create($input);
+        $input['dealershipId'] = auth('dealership')->id();
+        Car::create($input);
         return response()->json(['message'=>'car deal added successfuly!']);
     }
 
@@ -43,8 +33,8 @@ class carController extends Controller
      */
     public function show(string $id)
     {
-        $car = UserCar::findOrFail($id);
-        return response()->json(['data' => $car]);
+        $car = Car::with('dealership')->findOrFail($id);
+        return new carResource($car);
     }
 
     /**
@@ -53,7 +43,7 @@ class carController extends Controller
     public function update(carRequest $request, string $id)
     {
         $input = $request->validated();
-        $car = UserCar::findOrFail($id);
+        $car = Car::findOrFail($id);
         $input['price'] = number_format($input['price']);
         $car->update($input);
         return response()->json(['message'=>'car deal updated successfuly!']);

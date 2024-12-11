@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('distance');
             $table->string('condition');
             $table->string('price');
-            $table->string('ownerId');
+            $table->string('dealershipId');
             $table->string('description')->nullable();
             $table->string('imgUrl')->nullable();
             $table->timestamps();

@@ -15,12 +15,22 @@ class dealershipResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+        'id' => $this->id,
         'dealershipName' => $this->dealershipName,
         'email' => $this->email,
         'username' => $this->username,
         'phoneNumber' => $this->phoneNumber,
-        'password' => $this->password,
         'city' => $this->city,
+        'locationUrl' => $this->locationUrl,
         ];
     }
+
+    public function phoneAndEmail(): array
+{
+    return [
+        'phoneNumber' => $this->phoneNumber,
+        'email' => $this->email,
+    ];
+}
+
 }

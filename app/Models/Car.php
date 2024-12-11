@@ -16,18 +16,13 @@ class Car extends Model
        'distance',
        'condition',
        'price',
-       'ownerId',
+       'dealershipId',
        'description',
    ];
 
-   public function user()
-   {
-       return $this->belongsTo(User::class,'ownerId','id');
-   }
-
    public function dealership()
    {
-       return $this->belongsTo(Dealership::class,'ownerId','id');
+       return $this->belongsTo(Dealership::class,'dealershipId','id');
    }
 
 }

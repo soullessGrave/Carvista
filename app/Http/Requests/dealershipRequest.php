@@ -34,8 +34,6 @@ class dealershipRequest extends FormRequest
 
         'city' => ['required'],
 
-        'accountType' => ['required' , 'in:0,1'],
-
         'locationUrl' => ['url'],
         ];
     }

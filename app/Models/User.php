@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Tymon\JWTAuth\Contracts\JWTSubject;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -25,14 +24,7 @@ class User extends Authenticatable implements JWTSubject
         'phoneNumber',
         'password',
         'city',
-        'accountType',
     ];
-
-    public function car()
-{
-    return $this->hasMany(Car::class,'ownerId','id');
-}
-
 
     /**
      * The attributes that should be hidden for serialization.

@@ -22,8 +22,11 @@ class carResource extends JsonResource
        'distance' => $this->distance,
        'condition' => $this->condition,
        'price' => $this->price,
-       'ownerId' => $this->ownerId,
+       'dealershipId' => $this->dealershipId,
        'description' => $this->description,
+       'dealership' => [
+       'dealershipName' => $this->dealership->dealershipName,],
+
         ];
     }
 }

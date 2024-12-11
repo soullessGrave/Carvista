@@ -19,8 +19,6 @@ return new class extends Migration
             $table->string('phoneNumber')->unique();
             $table->string('password');
             $table->string('city');
-            $table->boolean('accountType')->default(0);
-            $table->string('locationUrl')->nullable();
             $table->string('otp')->nullable();
             $table->string('imgUrl')->nullable();
             $table->timestamps();

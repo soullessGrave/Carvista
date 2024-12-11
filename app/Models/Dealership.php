@@ -20,12 +20,11 @@ class Dealership extends Authenticatable implements JWTSubject
         'phoneNumber',
         'password',
         'city',
-        'accountType',
     ];
 
     public function car()
 {
-    return $this->hasMany(Car::class,'ownerId','id');
+    return $this->hasMany(Car::class,'dealershipId','id');
 }
 
     protected $hidden = [

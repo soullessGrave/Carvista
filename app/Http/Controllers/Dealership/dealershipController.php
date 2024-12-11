@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dealership;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\dealershipRequest;
 use App\Models\Dealership;
 use Illuminate\Http\Request;
 
 class dealershipController extends Controller
 {
-    
+
     public function register(dealershipRequest $request)
      {
         $input = $request->validated();
@@ -36,13 +37,14 @@ class dealershipController extends Controller
         return $this->respondWithToken($token);
     }
 
-     protected function respondWithToken($token)
+    protected function respondWithToken($token)
     {
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth('dealership')->factory()->getTTL() * 60
+            'expires_in' => auth('dealership')->factory()->getTTL() * 60,
+            'user_type'=>1
         ]);
     }
-
+    
 }
