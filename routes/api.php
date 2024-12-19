@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\adminController;
 use App\Http\Controllers\Dealership\dealershipController;
 use App\Http\Controllers\Dealership\carController;
+use App\Http\Controllers\loginController;
 use App\Http\Controllers\User\favourateController;
 use App\Http\Controllers\User\userCarController;
 use App\Http\Controllers\User\userController;
@@ -25,7 +27,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::post('userlogin', [userController::class,'login']);
+Route::post('login', [loginController::class,'login']);
+Route::post('forgetPassword', [loginController::class,'forgetPassword']);
+Route::post('verifyOtp', [loginController::class,'verifyOtp']);
+Route::post('resetPassword', [loginController::class,'resetPassword']);
+
+
 Route::post('userRegister', [userController::class,'register']);
 
 Route::group([
@@ -36,7 +43,7 @@ Route::group([
 ], function ($router) {
 
 Route::get('userAccountDetails', [userController::class,'me']);
-Route::put('updateUserProfile/{id}', [userController::class,'updateProfile']);
+Route::put('updateUserProfile', [userController::class,'updateProfile']);
 Route::post('changePassword', [userController::class,'changePassword']);
 Route::get('userlogout', [userController::class,'logout']);
 
@@ -55,8 +62,6 @@ Route::get('userlogout', [userController::class,'logout']);
 });
 
 
-
-Route::post('dealershiplogin', [dealershipController::class,'login']);
 Route::post('dealershipRegister', [dealershipController::class,'register']);
 
 Route::group([
@@ -66,10 +71,31 @@ Route::group([
 
 ], function ($router) {
 
+Route::get('dealershipProfile', [dealershipController::class,'me']);
+Route::put('updateProfile', [dealershipController::class,'updateProfile']);
+Route::post('changePassword', [dealershipController::class,'changePassword']);
+Route::get('dealershiplogout', [dealershipController::class,'logout']);
+
     Route::get('dealershipCars', [carController::class,'index']);
+    Route::post('search', [carController::class,'carSearch']);
     Route::post('addCarDeal', [carController::class,'store']);
     Route::get('showCarDeal/{id}', [carController::class,'show']);
     Route::put('updateCarDeal/{id}', [carController::class,'update']);
     Route::delete('deleteCarDeal/{id}', [carController::class,'destroy']);
     
+});
+
+Route::group([
+
+    'middleware' => 'auth:admin',
+    'prefix' => 'admin'
+
+], function ($router) {
+
+    Route::get('allCars', [adminController::class,'carIndex']);
+    Route::get('allDealerships', [adminController::class,'dealershipIndex']);
+    Route::get('allUsers', [adminController::class,'userIndex']);
+    Route::get('dashboard', [adminController::class,'dashboard']);
+    Route::get('adminlogout', [adminController::class,'logout']);
+
 });

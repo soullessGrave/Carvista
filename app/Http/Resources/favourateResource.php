@@ -12,12 +12,10 @@ class favourateResource extends JsonResource
      *
      * @return array<string, mixed>
      */
-    public function toArray(Request $request): array
+    public function toArray(Request $request)
     {
-        return [
-            'id'=>$this->id,
-            'userId' => $this->user->id,
-            'car' => $this->car
-        ];
+        return 
+            // 'userId' => $this->user->id,
+            $this->car;
     }
 }

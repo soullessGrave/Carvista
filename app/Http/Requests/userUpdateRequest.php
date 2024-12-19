@@ -23,8 +23,14 @@ class userUpdateRequest extends FormRequest
     {
         return [
             'name' => ['required' , 'max:255'],
-            'phoneNumber' => ['required' , 'numeric' , 'unique:users,phoneNumber' , 'unique:dealerships,phoneNumber'],
-            'city' => ['required'],
+
+            'email' => ['required' , 'email:filter' , 'max:40'],
+
+            'username' => ['required' , 'alpha_num' , 'min:5' , 'max:20'],
+
+            'phoneNumber' => ['required' , 'numeric'],
+
+            'city' => ['required' , 'string'],
         ];
     }
 }

@@ -10,9 +10,24 @@ use Illuminate\Http\Request;
 
 class carController extends Controller
 {
+
+    public function carSearch(Request $request)
+{
+    $query = Car::query();
+    if ($request->has('name')) {
+        $query->where('brandName', 'LIKE', $request->input('name') . '%')
+        ->orWhere('modelName', 'LIKE',  $request->input('name') . '%')
+        ->orWhere('manufactureYear', 'LIKE',  $request->input('name') .'%')
+        ->orWhere('condition', 'LIKE', $request->input('name').'%')->with('dealership');
+    }
+
+    $searchResult = $query->get();
+    return carResource::collection($searchResult);
+}
+
     public function index()
     {
-        $cars = Car::where('dealershipId',auth('dealership')->id())->with('dealership')->get();
+        $cars = Car::where('dealershipId',auth('dealership')->id())->orderBy('created_at','desc')->with('dealership')->get();
         return carResource::collection($cars);
     }
 
@@ -23,6 +38,7 @@ class carController extends Controller
     {
         $input = $request->validated();
         $input['price'] = number_format($input['price']);
+        // $input['distance'] = number_format($input['distance']);
         $input['dealershipId'] = auth('dealership')->id();
         Car::create($input);
         return response()->json(['message'=>'car deal added successfuly!']);

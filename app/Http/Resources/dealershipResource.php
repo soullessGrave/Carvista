@@ -25,12 +25,4 @@ class dealershipResource extends JsonResource
         ];
     }
 
-    public function phoneAndEmail(): array
-{
-    return [
-        'phoneNumber' => $this->phoneNumber,
-        'email' => $this->email,
-    ];
-}
-
 }

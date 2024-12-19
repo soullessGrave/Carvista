@@ -31,7 +31,7 @@ class userCarController extends Controller
     if ($request->has('name')) {
         $query->where('brandName', 'LIKE', $request->input('name') . '%')
         ->orWhere('modelName', 'LIKE',  $request->input('name') . '%')
-        ->orWhere('manufactureYear', 'LIKE',  $request->input('name'))
+        ->orWhere('manufactureYear', 'LIKE',  $request->input('name') .'%')
         ->orWhere('condition', 'LIKE', $request->input('name').'%')->with('dealership');
     }
 

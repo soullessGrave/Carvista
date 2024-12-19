@@ -30,7 +30,7 @@ class dealershipRequest extends FormRequest
 
         'phoneNumber' => ['required' , 'numeric' , 'unique:users,phoneNumber' , 'unique:dealerships,phoneNumber'],
 
-        'password' => ['required' , 'string' , 'min:12' , 'max:32'],
+        'password' => ['required', 'string' , 'min:12' , 'max:32', 'confirmed'],
 
         'city' => ['required'],
 

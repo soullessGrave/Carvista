@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class favourateRequest extends FormRequest
+class dealershipUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,13 @@ class favourateRequest extends FormRequest
     public function rules(): array
     {
         return [
-        //    'userId' => ['required' , 'exists:users,id'],
-            'carId' => ['required' , 'exists:cars,id'],
-        ];
+            'dealershipName' => ['required' , 'max:255'],
+    
+            'phoneNumber' => ['required' , 'numeric'],
+    
+            'city' => ['required'],
+    
+            'locationUrl' => ['url'],
+            ];
     }
 }

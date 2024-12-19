@@ -17,8 +17,8 @@ class adminFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'=>'adbo',
-            'email'=>'abdo@gmail.com',
+            'name'=>'admin',
+            'email'=>'admin@carvista.com',
             'password'=> bcrypt('20012001')
         ];
     }

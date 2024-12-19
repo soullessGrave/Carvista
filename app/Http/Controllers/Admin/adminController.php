@@ -3,6 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\carResource;
+use App\Http\Resources\dealershipResource;
+use App\Http\Resources\userResource;
+use App\Models\Car;
+use App\Models\Dealership;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class adminController extends Controller
@@ -10,40 +16,41 @@ class adminController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function userIndex()
     {
-        //
+        $users = User::orderBy('created_at','desc')->get();
+        return userResource::collection($users);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function dealershipIndex()
     {
-        //
+        $dealerships = Dealership::orderBy('created_at','desc')->get();
+        return dealershipResource::collection($dealerships);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function carIndex()
     {
-        //
+        $cars = Car::orderBy('created_at','desc')->get();
+        return carResource::collection($cars);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function dashboard()
     {
-        //
+        $cars = Car::all()->count();
+        $users = User::all()->count();
+        $dealerships = Dealership::all()->count();
+        return response()->json( 
+        ['usersNumber' => $users,
+         'carsNumber' => $cars,
+         'dealershipsNumber' => $dealerships,
+         ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function logout()
     {
-        //
+        auth('admin')->logout();
+
+        return response()->json(['message' => 'Successfully logged out']);
     }
+
 }
